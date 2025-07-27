@@ -1,0 +1,63 @@
+Data successfully loaded from ./dataset/val_dataloader.pkl
+Data successfully loaded from ./dataset/test_dataloader.pkl
+loaded weights in 711.25 ms, 0.02 GB loaded at 0.03 GB/s
+[32mModel weights loaded from ./trained_model/weight_0.9954_0.9830.pth[0m
+[34m
+== Val dataset results ==[0m
+Successfully read 3000 records from file: ./dataset/val_labels.txt
+== Parkes ==
+Accuracy : 98.11%
+Precision: 98.03%
+Recall   : 98.60%
+F1 Score : 98.31%
+
+== FAST ==
+Accuracy : 98.17%
+Precision: 99.22%
+Recall   : 96.60%
+F1 Score : 97.90%
+
+== Arecibo ==
+Accuracy : 98.73%
+Precision: 98.10%
+Recall   : 99.28%
+F1 Score : 98.69%
+
+[34m
+== MWA Test dataset results ==[0m
+Successfully read 10000 records from file: ./dataset/test_labels.txt
+[33mPositive class: recall=0.9665, precision=0.9347, F1-score=0.9503[0m
+[33mNegative class: recall=0.9550, precision=0.9771, F1-score=0.9659[0m
+TN (True Negative: negative samples correctly identified as negative):    5730
+FP (False Positive: negative samples incorrectly identified as positive): 270
+FN (False Negative: positive samples incorrectly identified as negative): 134
+TP (True Positive: positive samples correctly identified as positive):    3866
+[34m
+== Finetuned MWA Test dataset results ==[0m
+loaded weights in 156.31 ms, 0.00 GB loaded at 0.00 GB/s
+[32mModel weights loaded from ./trained_model/finetune_mwa_weight.pth[0m
+Successfully read 10000 records from file: ./dataset/test_labels.txt
+[33mPositive class: recall=0.9792, precision=0.9507, F1-score=0.9648[0m
+[33mNegative class: recall=0.9662, precision=0.9859, F1-score=0.9759[0m
+TN (True Negative: negative samples correctly identified as negative):    5797
+FP (False Positive: negative samples incorrectly identified as positive): 203
+FN (False Negative: positive samples incorrectly identified as negative): 83
+TP (True Positive: positive samples correctly identified as positive):    3917
+[34m
+== GBNCC dataset results ==[0m
+loaded weights in 155.52 ms, 0.00 GB loaded at 0.00 GB/s
+[32mModel weights loaded from ./trained_model/weight_0.9954_0.9830.pth[0m
+loaded weights in  32.59 ms, 0.00 GB loaded at 0.04 GB/s
+loaded weights in  26.15 ms, 0.00 GB loaded at 0.05 GB/s
+loaded weights in  27.10 ms, 0.00 GB loaded at 0.05 GB/s
+Pulsars - Threshold 0.5: 56, 0.3: 56
+Harmonic - Threshold 0.5: 219, 0.3: 221
+Nonpulsars - Threshold 0.5: 447, 0.3: 762
+[34m
+== NGC 5904 (M5) results ==[0m
+loaded weights in  20.66 ms, 0.00 GB loaded at 0.06 GB/s
+NGC 5904 (M5) total candidates: 1006, predict prob > 0.5: 113
+[34m
+== FAST simulate pulsar results ==[0m
+loaded weights in  29.03 ms, 0.00 GB loaded at 0.04 GB/s
+FAST simulate pulsar total candidates: 299, predict prob > 0.5: 48
