@@ -1,0 +1,48 @@
+# data_config.yaml
+DATA:
+  SAVE_PICKLE: False
+  SAVE_PATH: "./dataset"
+  DATASETS:
+    TRAIN:
+      FAST:
+        pulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/FAST/fast_pulsars.txt"
+        nopulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/FAST/fast_nonpulsars.txt"
+      Arecibo:
+        pulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/Arecibo/arecibo_pulsars.txt"
+        nopulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/Arecibo/arecibo_nonpulsars.txt" 
+      Parkes:  
+        pulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/Parkes/parkes_pulsars.txt"
+        nonpulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/Parkes/parkes_nonpulsars.txt"
+      Add:  
+        nonpulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/Arecibo/nonpulsar_add.txt"
+    TEST:
+      MWA:
+        pulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/MWA/MWA_pulsars.txt"
+        nopulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/MWA/MWA_nonpulsar.txt"
+  DATALOADER:
+    TRAIN: "./dataset/train_dataloader.pkl"
+    VAL: "./dataset/val_dataloader.pkl"
+    TEST: "./dataset/test_dataloader.pkl"
+
+TRAIN:
+  VAL_SIZE: 0.25          
+  RANDOM_STATE: 8      
+  EPOCHS: 20              
+  BATCH_SIZE: 256        
+  SAVE_MODEL_PATH: './checkpoints'
+
+OPTIMIZER:
+  TYPE: "AdamW"             
+  LR: 5e-3               
+  WEIGHT_DECAY: 1e-2 
+  EPS: 1e-6      
+  SCHEDULER: CosineAnnealingScheduler       
+
+LOSS_FUNC:
+  TYPE: "CrossEntropyLoss"  
+  LABEL_SMOOTHING: 0.02 
+
+# Device Configuration
+# Support Device: ['WEBGPU', 'REMOTE', 'QCOM', 'PYTHON', 'NV', 'NULL', 'NPY', 
+#                 'METAL', 'LLVM', 'HIP', 'GPU', 'DSP', 'DISK', 'CUDA', 'CPU', 'AMD']
+DEVICE: NV:1  # If a default value needs to be retained, keep "Default".

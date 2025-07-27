@@ -1,0 +1,20 @@
+# Denoise Model Configuration
+data:
+  source: pkl  # Options: 'pkl' or 'txt'
+  pfds_path: ./dataset/train_pfds.pkl
+  target_path: ./dataset/train_target.pkl
+  txt_path: ./dataset/train_data.txt
+  random_state: 10
+
+# Hyperparameter Configuration
+hyperparameters:
+  val_size: 400
+  batch_size: 128
+  n_epochs: 20
+  lr: 0.0001
+  weight_decay: 0.001
+
+# Device Configuration
+# Support Device: ['WEBGPU', 'REMOTE', 'QCOM', 'PYTHON', 'NV', 'NULL', 'NPY', 
+#                 'METAL', 'LLVM', 'HIP', 'GPU', 'DSP', 'DISK', 'CUDA', 'CPU', 'AMD']
+device: NV:1  # If a default value needs to be retained, keep "Default".

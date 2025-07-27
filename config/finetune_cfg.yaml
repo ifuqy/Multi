@@ -1,0 +1,40 @@
+# data_config.yaml
+DATA:
+  SAVE_PICKLE: False
+  SAVE_PATH: "./dataset"
+  DATASETS:
+    TRAIN:
+      MWA_finetune:
+        pulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/MWA_finetune/finetune_pulsars.txt"
+        nopulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/MWA_finetune/finetune_nonpulsars.txt"
+    TEST:
+      MWA:
+        pulsars_01: "/data_zfs/fast/fuqy/AI/Multi_tinygrad/dataset/1266329600_pulsar_dataset.txt"
+        pulsars_02: "/data_zfs/fast/fuqy/AI/Multi_tinygrad/dataset/1266932744_pulsar_dataset.txt"
+        pulsars_03: "/data_zfs/fast/fuqy/AI/Multi_tinygrad/dataset/1301240224_pulsar_dataset.txt"
+        nopulsars: "/data_zfs/fast/fuqy/AI/Multi_tinygrad/dataset/mwa_nopulsar_dataset.txt"
+  DATALOADER:
+    TRAIN: "./dataset/finetune_dataloader_1000samples.pkl"
+    TEST: "./dataset/test_dataloader.pkl"
+
+TRAIN:        
+  RANDOM_STATE: 8      
+  EPOCHS: 20              
+  BATCH_SIZE: 100      
+  SAVE_MODEL_PATH: './finetune_checkpoints'
+
+OPTIMIZER:
+  TYPE: "AdamW"             
+  LR: 5e-4               
+  WEIGHT_DECAY: 1e-2 
+  EPS: 1e-6      
+  SCHEDULER: CosineAnnealingScheduler       
+
+LOSS_FUNC:
+  TYPE: "CrossEntropyLoss"  
+  LABEL_SMOOTHING: 0.02 
+
+# Device Configuration
+# Support Device: ['WEBGPU', 'REMOTE', 'QCOM', 'PYTHON', 'NV', 'NULL', 'NPY', 
+#                 'METAL', 'LLVM', 'HIP', 'GPU', 'DSP', 'DISK', 'CUDA', 'CPU', 'AMD']
+DEVICE: NV:1  # If a default value needs to be retained, keep "Default".

@@ -1,0 +1,11 @@
+MULTIPROCESSING:
+  ENABLED: true   
+  NUM_WORKERS: 64       
+
+PREDICTION:
+  BATCH_SIZE: 256        
+
+# Device Configuration
+# Support Device: ['WEBGPU', 'REMOTE', 'QCOM', 'PYTHON', 'NV', 'NULL', 'NPY', 
+#                 'METAL', 'LLVM', 'HIP', 'GPU', 'DSP', 'DISK', 'CUDA', 'CPU', 'AMD']
+DEVICE: NV:1  # If a default value needs to be retained, keep "Default".
