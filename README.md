@@ -1,6 +1,8 @@
 # Multi
 Multi_AI project
 
+This model's code is implemented using [Tinygrad](https://github.com/tinygrad/tinygrad).
+
 > **Note:** The paper associated with this project is currently under review. Model weights and the dataset will be released in the near future.
 
 The training parameters of the model are configured in the YAML files located in the `config` directory.
