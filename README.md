@@ -11,6 +11,15 @@ Thanks to those who provided the data, computing resources, and all other contri
 >
 > **Note:** The results of the model performance evaluation reported in the paper can be found in `evaluate_result.txt`.
 
+The testing environment for this program is as follows:
+
+- `tinygrad==0.10.2`
+- `numpy==1.22.4`
+- `yaml==5.4.1`
+- `sklearn==1.1.3`
+- `tqdm==4.66.1`
+- `scipy==1.11.3`
+
 The training parameters of the model are configured in the YAML files located in the `config` directory.
 
 Before using the model for prediction, make sure to configure the number of processes and the prediction batch size in `Multi/config/global_cfg.yaml`.
