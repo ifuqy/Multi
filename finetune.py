@@ -102,7 +102,9 @@ def main():
         'profiles': {'phasebins': [64, 96, 128]},
         'intervals': {'intervals': [64, 96, 128]}
     }
-    multi_AI = Multi_AI(combineModel, features, ckpt="./trained_model/weight_0.9954_0.9830.pth")
+
+    trained_model = config["TRAIN"]["TRAINED_MODEL_PATH"]
+    multi_AI = Multi_AI(combineModel, features, ckpt=trained_model)
 
 
     loss_func = lambda x, y: x.cross_entropy(y, label_smoothing=config["LOSS_FUNC"]["LABEL_SMOOTHING"])

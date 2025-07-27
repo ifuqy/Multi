@@ -28,7 +28,8 @@ TRAIN:
   VAL_SIZE: 0.25          
   RANDOM_STATE: 8      
   EPOCHS: 20              
-  BATCH_SIZE: 256        
+  BATCH_SIZE: 256       
+  TRAINED_MODEL_PATH: './trained_model/weight_0.9954_0.9830.pth' 
   SAVE_MODEL_PATH: './checkpoints'
 
 OPTIMIZER:
