@@ -9,7 +9,7 @@ Thanks to those who provided the data, computing resources, and all other contri
 
 > **Note:** The paper associated with this project is currently under review. Model weights and the dataset will be released in the near future.
 >
-> **Note:**The results of the model performance evaluation reported in the paper can be found in `evaluate_result.txt`.
+> **Note:** The results of the model performance evaluation reported in the paper can be found in `evaluate_result.txt`.
 
 The training parameters of the model are configured in the YAML files located in the `config` directory.
 
