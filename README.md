@@ -15,7 +15,7 @@ An example of correct execution is shown in `denoise_model_process.jpg`.
 You can train the classification model using `python train.py`.  
 An example of correct execution is shown in `train_model_process.jpg`.
 
-You can fine-tune a pre-trained model using `python train.py`.  
+You can fine-tune a pre-trained model using `python finetune.py`.  
 An example of correct execution is shown in `finetune_process.jpg`.
 
 The command to predict time-domain pulsar candidates is as follows:
