@@ -5,20 +5,20 @@ DATA:
   DATASETS:
     TRAIN:
       FAST:
-        pulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/FAST/fast_pulsars.txt"
-        nopulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/FAST/fast_nonpulsars.txt"
+        pulsars: "./dataset/FAST/fast_pulsars.txt"
+        nopulsars: "./dataset/FAST/fast_nonpulsars.txt"
       Arecibo:
-        pulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/Arecibo/arecibo_pulsars.txt"
-        nopulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/Arecibo/arecibo_nonpulsars.txt" 
+        pulsars: "./dataset/Arecibo/arecibo_pulsars.txt"
+        nopulsars: "./dataset/Arecibo/arecibo_nonpulsars.txt" 
       Parkes:  
-        pulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/Parkes/parkes_pulsars.txt"
-        nonpulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/Parkes/parkes_nonpulsars.txt"
+        pulsars: "./dataset/Parkes/parkes_pulsars.txt"
+        nonpulsars: "./dataset/Parkes/parkes_nonpulsars.txt"
       Add:  
-        nonpulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/Arecibo/nonpulsar_add.txt"
+        nonpulsars: "./dataset/Arecibo/nonpulsar_add.txt"
     TEST:
       MWA:
-        pulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/MWA/MWA_pulsars.txt"
-        nopulsars: "/data_zfs/fast/fuqy/AI/data/Multi_AI/MWA/MWA_nonpulsar.txt"
+        pulsars: "./dataset/MWA/MWA_pulsars.txt"
+        nopulsars: "./dataset/MWA/MWA_nonpulsar.txt"
   DATALOADER:
     TRAIN: "./dataset/train_dataloader.pkl"
     VAL: "./dataset/val_dataloader.pkl"
