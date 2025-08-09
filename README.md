@@ -29,7 +29,7 @@ For training, it is recommended to use the dataloader approach. You can create a
 
 ```bash
 python make_dataloader.py --pfd_dir ./pfds/ --output_root ./test_dataloader --batch_size 256
-python generate_dataloader.py --pfd_list ./mwa_pulsars.txt --output_root ./mwa_test --batch_size 256
+python make_dataloader.py --pfd_list ./mwa_pulsars.txt --output_root ./mwa_test --batch_size 256
 ```
 
 You can train the denoising model using `python denoise_model.py`.  
