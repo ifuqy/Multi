@@ -83,16 +83,26 @@ def save_pfd_label(X_data, y_data=None, output_file='labels.txt'):
         with open(output_file, 'w', encoding='utf-8') as f:
             if y_data is not None:
                 f.write("Filename\tLabel\n")
-                for x, y in zip(X_data, y_data):
-                    filename = getattr(x, 'pfd_filename', '')
-                    f.write(f"{filename}\t{y}\n")
-                print(f"Successfully saved {len(X_data)} records with labels to file: {output_file}")
+                if isinstance(X_data[0], pfdreader):
+                    for x, y in zip(X_data, y_data):
+                        filename = getattr(x, 'pfd_filename', '')
+                        f.write(f"{filename}\t{y}\n")
+                    print(f"Successfully saved {len(X_data)} records with labels to file: {output_file}")
+                else:
+                    for x, y in zip(X_data, y_data):
+                        f.write(f"{x}\t{y}\n")
+                    print(f"Successfully saved {len(X_data)} records with labels to file: {output_file}")
             else:
                 f.write("Filename\n")
-                for x in X_data:
-                    filename = getattr(x, 'pfd_filename', '')
-                    f.write(f"{filename}\n")
-                print(f"Successfully saved {len(X_data)} filenames to file: {output_file}")
+                if isinstance(X_data[0], pfdreader):
+                    for x in X_data:
+                        filename = getattr(x, 'pfd_filename', '')
+                        f.write(f"{filename}\n")
+                    print(f"Successfully saved {len(X_data)} filenames to file: {output_file}")
+                else:
+                    for x in X_data:
+                        f.write(f"{x}\n")
+                    print(f"Successfully saved {len(X_data)} filenames to file: {output_file}")
                 
     except Exception as e:
         print(f"Error saving file: {str(e)}")
