@@ -436,7 +436,7 @@ class Classifier:
 
     @Tensor.test()
     def predict(self, dl):
-        results = None
+        all_preds = []
         total_batches = len(dl)
         t = trange(total_batches)
         for batch in dl:
@@ -444,17 +444,15 @@ class Classifier:
             inputs = list(map(Tensor, inputs))
             out = self(*inputs)
             preds = out.argmax(axis=1)
+            all_preds.append(preds.detach().numpy()) 
             t.update(1)
-            if results is None:
-                results = preds  
-            else:
-                results = results.cat(preds, dim=0)
-        
-        return results.numpy()
+            del inputs
+        results = np.concatenate(all_preds)
+        return results
 
     @Tensor.test()
     def predict_prob(self, dl):
-        results = None
+        all_probs = []
         total_batches = len(dl)
         t = trange(total_batches)
         for batch in dl:
@@ -462,12 +460,11 @@ class Classifier:
             inputs = list(map(Tensor, inputs))
             out = self(*inputs)
             probs = out.softmax(axis=1)[:, 1]
+            all_probs.append(probs.detach().numpy()) 
             t.update(1)
-            if results is None:
-                results = probs 
-            else:
-                results = results.cat(probs, dim=0)
-        return results.numpy()
+            del inputs
+        results = np.concatenate(all_probs)
+        return results
 
 
     @Tensor.test()
