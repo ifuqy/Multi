@@ -146,6 +146,20 @@ class Multi_AI:
             dataloaders['profiles'][0], dataloaders['profiles'][1], dataloaders['profiles'][2],
             dataloaders['intervals'][0], dataloaders['intervals'][1], dataloaders['intervals'][2]
         ))
+
+        """
+        def combined_gen():
+            for a, b, c, d, e, f in zip(
+                dataloaders['profiles'][0],
+                dataloaders['profiles'][1],
+                dataloaders['profiles'][2],
+                dataloaders['intervals'][0],
+                dataloaders['intervals'][1],
+                dataloaders['intervals'][2]
+            ):
+                yield [a, b, c, d, e, f]  
+        combined_dataloaders = combined_gen()
+        """
         return combined_dataloaders
 
     def set(self, loss_func,
