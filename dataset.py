@@ -197,18 +197,20 @@ def pfd_Dataloader(
     batch_size: int = 64,
     shuffle: bool = True
 ) -> Generator[Union[np.ndarray, Tuple[np.ndarray, np.ndarray]], None, None]:
-    indices = np.arange(len(dataset))
+    indices = np.arange(len(dataset[0]))
+    # dataset.data.shape = (1, 1000, 1, 64, 64), so len(dataset[0])
     if shuffle:
         np.random.shuffle(indices)
 
-    for start in range(0, len(dataset), batch_size):
+    for start in range(0, len(dataset[0]), batch_size):
         batch_idx = indices[start:start+batch_size]
         if dataset.labels is not None:
-            batch_data = dataset.data[batch_idx]
+            batch_data = dataset.data[:, batch_idx, ...]
+            # dataset.data.shape = (1, 1000, 1, 64, 64), so batch_data = dataset.data[:, batch_idx, ...]
             batch_labels = dataset.labels[batch_idx]
             yield batch_data, batch_labels
         else:
-            yield dataset.data[batch_idx]
+            yield dataset.data[:, batch_idx, ...]
 
 def pfd_To_dataloader(
     pfds: any,
@@ -236,6 +238,7 @@ def pfd_To_dataloader(
     
     def create_dataloader(data, label=None):
         dataset = pfd_Dataset(data, label) if label is not None else pfd_Dataset(data)
+        # dataset.data.shape = (1, 1000, 1, 64, 64), so batch_data = dataset.data[:, batch_idx, ...]
         return pfd_Dataloader(
             dataset,
             batch_size=batch_size,
