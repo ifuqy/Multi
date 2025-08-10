@@ -120,11 +120,13 @@ def read_pfd_label(input_file='labels.txt'):
     """
     try:
         filenames = []
-        labels = []
+        labels = None
 
         with open(input_file, 'r', encoding='utf-8') as f:
             header = next(f)  # Skip header line
             has_label = 'Label' in header
+            if has_label:
+                labels = []
 
             for line in f:
                 line = line.strip()
@@ -141,7 +143,7 @@ def read_pfd_label(input_file='labels.txt'):
                     print(f"Warning: Incorrectly formatted line '{line}'")
 
         print(f"Successfully read {len(filenames)} records from file: {input_file}")
-        return filenames, labels if has_label else None
+        return filenames, labels 
 
     except Exception as e:
         print(f"Error reading file: {str(e)}")
