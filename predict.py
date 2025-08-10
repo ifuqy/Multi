@@ -42,7 +42,7 @@ def main():
     if args.pfd_dataloader:
         if not args.pfd_file:
             raise ValueError("pfd_file is required when using dataloader")
-        pfds = read_pfd_label(args.pfd_file)
+        pfds, _ = read_pfd_label(args.pfd_file)
         pfd_dataloader = load_from_pickle(args.pfd_dataloader)
 
         if args.use_prob:
