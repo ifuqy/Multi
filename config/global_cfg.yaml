@@ -3,7 +3,7 @@ MULTIPROCESSING:
   NUM_WORKERS: 64       
 
 PREDICTION:
-  BATCH_SIZE: 256        
+  BATCH_SIZE: 1024        
 
 # Device Configuration
 # Support Device: ['WEBGPU', 'REMOTE', 'QCOM', 'PYTHON', 'NV', 'NULL', 'NPY', 
