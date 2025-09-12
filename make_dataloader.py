@@ -8,11 +8,12 @@ from models.combined_model import CombinedModel
 from classifier import Multi_AI
 from data_utils import save_pfd_label
 from sklearn.utils import shuffle
+import gc
 
 """
 Usage:
-    python make_dataloader.py --pfd_dir ./pfds/ --output_root ./test_dataloader --batch_size 256
-    python generate_dataloader.py --pfd_list ./mwa_pulsars.txt --output_root ./mwa_test --batch_size 256
+    python make_dataloader.py --pfd_dir ./pfds/ --output_root ./test_dataloader --batch_size 256 --chunk_size 50000
+    python make_dataloader.py --pfd_list ./mwa_pulsars.txt --output_root ./mwa_test --batch_size 256 --chunk_size 50000
 """
 
 def read_pfd_txt_file(filename):
@@ -38,6 +39,7 @@ def main():
 
     parser.add_argument('--output_root', type=str, required=True, help='Output prefix path (e.g., ./test_dataloader)')
     parser.add_argument('--batch_size', type=int, default=256, help='Batch size for dataloader')
+    parser.add_argument('--chunk_size', type=int, default=50000, help='The number of samples contained in each .pkl file (to prevent memory overflow when an excessive number of files are read in)')
 
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--pfd_dir', type=str, help='Directory containing .pfd files (no labels)')
@@ -61,7 +63,7 @@ def main():
         pfds, targets = shuffle(
             pfds, targets, random_state=None
         )
-
+    '''
     # Build dataloader
     dataloader = multi_AI.create_Combined_dataloader(pfds, targets, batch_size=args.batch_size)
 
@@ -71,8 +73,29 @@ def main():
 
     print(f"[Done] Saved dataloader to {args.output_root + '.pkl'}")
     print(f"[Done] Saved pfd file list to {args.output_root + '.txt'}")
+    '''
+    total = len(pfds)
+    chunk_size = args.chunk_size
+    num_chunks = (total + chunk_size - 1) // chunk_size  # ceil
+
+    for i in range(num_chunks):
+        start = i * chunk_size
+        end = min((i + 1) * chunk_size, total)
+        pfds_chunk = pfds[start:end]
+        targets_chunk = targets[start:end] if targets is not None else None
+
+        dataloader = multi_AI.create_Combined_dataloader(pfds_chunk, targets_chunk, batch_size=args.batch_size)
+
+        out_prefix = f"{args.output_root}_part{i:02d}"
+        save_to_pickle(dataloader, out_prefix + '.pkl')
+        save_pfd_label(pfds_chunk, targets_chunk, out_prefix + '.txt')
+
+        print(f"[Done] Saved part {i+1}/{num_chunks}: {out_prefix}.pkl and .txt")
+
+        del dataloader
+        del pfds_chunk
+        del targets_chunk
+        gc.collect()
 
 if __name__ == '__main__':
     main()
-
-
