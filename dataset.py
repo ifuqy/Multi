@@ -24,6 +24,8 @@ use_multiprocessing = global_config['MULTIPROCESSING']['ENABLED']
 if use_multiprocessing:
     num_workers = global_config['MULTIPROCESSING']['NUM_WORKERS']
 
+denoise_batch_size = global_config['PREDICTION']['BATCH_SIZE']
+
 # Load denoise model
 class denoise_UNet:
     def __init__(self):
@@ -116,7 +118,7 @@ def pfd_to_data(pfds, target=None, feature=None, denoise=True, sim_harmonic=Fals
         model.load_weights('./trained_model/denoise_model.pth')
 
         if not isinstance(values, list):
-            batch_size = 128
+            batch_size = denoise_batch_size
             preds = []
 
             for i in range(0, len(data), batch_size):
@@ -127,7 +129,7 @@ def pfd_to_data(pfds, target=None, feature=None, denoise=True, sim_harmonic=Fals
             data = np.concatenate(preds)
         else:
             for f, sfd in enumerate(data):
-                batch_size = 128
+                batch_size = denoise_batch_size
                 preds = []
                 # preds = None
                 for i in range(0, len(sfd), batch_size):
