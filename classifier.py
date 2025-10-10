@@ -16,6 +16,13 @@ from tinygrad.helpers import getenv, colored, trange
 from tinygrad.nn.state import safe_save, safe_load, get_state_dict, load_state_dict
 import yaml
 
+# As Tensor.test() decorator was removed in v0.11.0, return empty decorator if test method doesn't exist
+def safe_decorator(cls, attr_name, *args, **kwargs):
+    deco = getattr(cls, attr_name, None)
+    if deco is not None:
+        return deco(*args, **kwargs)
+    return lambda f: f
+
 def load_config(config_path):
     with open(config_path) as f:
         config = yaml.safe_load(f)
@@ -367,7 +374,7 @@ class Classifier:
         self.train_f1[epoch] = f1_pos
         
 
-    @Tensor.test()
+    @safe_decorator(Tensor, "test")
     def validate_epoch(self, dl_val, epoch):
         total_loss, correct, total = 0.0, 0, 0
         all_preds = None
@@ -419,7 +426,7 @@ class Classifier:
 
         return loss, correct, total, labels, preds
     
-    @Tensor.test()
+    @safe_decorator(Tensor, "test")
     def validate_batch(self, batch):
         inputs = [b[0] for b in batch] # 6 features x batches x (64,96,128)
         inputs = list(map(Tensor, inputs))
@@ -434,7 +441,7 @@ class Classifier:
 
         return loss, correct, total, labels, preds
 
-    @Tensor.test()
+    @safe_decorator(Tensor, "test")
     def predict(self, dl):
         all_preds = []
         total_batches = len(dl)
@@ -450,7 +457,7 @@ class Classifier:
         results = np.concatenate(all_preds)
         return results
 
-    @Tensor.test()
+    @safe_decorator(Tensor, "test")
     def predict_prob(self, dl):
         all_probs = []
         total_batches = len(dl)
@@ -467,7 +474,7 @@ class Classifier:
         return results
 
 
-    @Tensor.test()
+    @safe_decorator(Tensor, "test")
     def test_datasets(self, test_dataloader):
         total_loss, correct, total = 0.0, 0, 0
         all_preds = None

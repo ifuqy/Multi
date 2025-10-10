@@ -14,6 +14,13 @@ import yaml
 from sklearn.utils import shuffle
 # Device.DEFAULT = "NV:1"
 
+# As Tensor.test() decorator was removed in v0.11.0, return empty decorator if test method doesn't exist
+def safe_decorator(cls, attr_name, *args, **kwargs):
+    deco = getattr(cls, attr_name, None)
+    if deco is not None:
+        return deco(*args, **kwargs)
+    return lambda f: f
+
 # === Utility Functions ===
 
 def psnr(x: Tensor, y: Tensor) -> float:
@@ -275,7 +282,7 @@ if __name__ == "__main__":
         # print(f"SSIM: {ssim.item():.4f} | Gradient: {edge.item():.4f}")
         return loss
 
-    @Tensor.test()
+    @safe_decorator(Tensor, "test")
     def net_output(x: Tensor) -> Tensor:
         return net(x)
 
