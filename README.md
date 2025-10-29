@@ -47,7 +47,10 @@ The command to predict time-domain pulsar candidates is as follows:
 
 ```shell
 python predict.py --ckpt ./trained_model/weight_0.9954_0.9830.pth --outfile clf_result.txt --pfd_dataloader test_dataloader.pkl --pfd_file ./test_pfdfile.txt --use_prob
-python predict.py --ckpt ./trained_model/weight_0.9954_0.9830.pth --outfile ./test_pfdfile.txt --pfd_dir ./M5_knownpulsar/ --use_prob
+python predict.py --ckpt ./trained_model/weight_0.9954_0.9830.pth --outfile ./test_pfdfile.txt --pfd_dir ./M5_knownpulsar/ --use_prob --chunk_size 500
+
+# chunk_size = maximum number of .pfd files loaded at once.
+# Reduce this value if you encounter RAM or GPU out-of-memory issues.
 ```
 
 A more detailed user doc will be released soon.
