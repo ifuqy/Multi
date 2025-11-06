@@ -7,7 +7,7 @@ from classifier import Multi_AI
 from data_utils import read_pfd_label
 import glob
 import argparse
-import os 
+import os, gc
 from utils import load_from_pickle
 
 """
