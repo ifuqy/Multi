@@ -15,12 +15,19 @@ Please use `./trained_model/weight_0.9954_0.9830.pth` as the model weights.
 
 The testing environment for this program is as follows:
 
-- `tinygrad==0.10.2`
+- `tinygrad==0.10.2` 
+- `matplotlib==3.8.4 `
 - `numpy==1.22.4`
-- `yaml==5.4.1`
-- `sklearn==1.1.3`
+- `pyyaml==5.4.1`
+- `scikit-learn==1.1.3`
 - `tqdm==4.66.1`
 - `scipy==1.11.3`
+
+To install required dependencies,  run:
+
+```bash
+pip install -r requirements.txt
+```
 
 The training parameters of the model are configured in the YAML files located in the `config` directory.
 

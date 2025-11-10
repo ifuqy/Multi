@@ -1,0 +1,7 @@
+matplotlib>=3.8.4
+numpy>=1.22.4
+pyyaml>=5.4.1
+scikit-learn>=1.1.3
+scipy>=1.11.3
+tqdm>=4.66.1
+git+https://github.com/tinygrad/tinygrad.git@v0.10.2
