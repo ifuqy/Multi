@@ -9,7 +9,7 @@ Thanks to those who provided the data, computing resources, and all other contri
 
 Please use `./trained_model/weight_0.9954_0.9830.pth` as the model weights. 
 
-> **Note:** The paper associated with this project is currently under review. The dataset will be released in the near future.
+> **Note:** The paper "Improving pulsar search efficiency in next-generation pulsar surveys with artificial intelligence" has been published in MNRAS.  [Click here to view the article](https://academic.oup.com/mnras/advance-article-abstract/doi/10.1093/mnras/staf1952/8316843?utm_source=advanceaccess&utm_campaign=mnras&utm_medium=email)
 >
 > **Note:** The results of the model performance evaluation reported in the paper can be found in `evaluate_result.txt`.
 
