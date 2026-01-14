@@ -1,4 +1,5 @@
 from prepfold import pfd
+from jsonreader import jsonreader
 import os
 import pickle
 import numpy as np
@@ -20,11 +21,14 @@ if use_multiprocessing:
 
 class pfdreader(pfd):
     def __init__(self, pfdfile):
+     
+
         if os.access(pfdfile, os.R_OK) and os.path.splitext(pfdfile)[1] == '.pfd':
             super().__init__(pfdfile)
             self.pfdfile = pfdfile
             self.dedisperse(DM=self.bestdm, doppler=1)
             self.adjust_period()
+    
 
     def getdata(self, *args, **kwargs):
         data = []
@@ -139,11 +143,23 @@ class pfdreader(pfd):
                 return shiftphase(get_DMcurve(DMbins))
             else:
                 return get_DMcurve(DMbins)
-
+            
+        def get_path(self):
+            return self.pfdfile
+        
 from multiprocessing import Pool, cpu_count  
 
-def parallel_pfdreader(filename):
-    return pfdreader(filename)      
+def parallel_candidate_reader(filename):
+    filename_str = str(filename).strip()
+
+    if filename_str.endswith(".pfd"):
+        return pfdreader(filename_str)
+
+    if filename_str.endswith(".json"):
+        return jsonreader(filename_str)
+
+    raise ValueError(f"Unsupported file type: {filename_str}")
+
 
 from tqdm import tqdm
 
@@ -191,7 +207,7 @@ class dataloader(object):
             data = np.loadtxt(filename, dtype=dtype, comments='#')
 
             with Pool(processes=num_workers) as pool:
-                self.pfds = list(tqdm(pool.imap(parallel_pfdreader, data['fname'].astype(str)),
+                self.pfds = list(tqdm(pool.imap(parallel_candidate_reader, data['fname'].astype(str)),
                                     total=len(data['fname']),
                                     desc='PFDs Reading',
                                     mininterval=1.0))

@@ -1,3 +1,4 @@
+from jsonreader import jsonreader
 from tinygrad import Tensor, nn
 from typing import List, Optional, Tuple
 import numpy as np
@@ -109,6 +110,15 @@ def focal_loss(logits, target, alpha=0.75, gamma=2.0):
     loss = -alpha * (1 - pt) ** gamma * pt.log()
     return loss.mean()
 
+def candidate_reader(path):
+    path = str(path).strip()
+    if path.endswith(".pfd"):
+        return pfdreader(path)
+    if path.endswith(".json"):
+        return jsonreader(path)
+    raise ValueError(f"Unsupported candidate file: {path}")
+
+
 class Multi_AI:
     def __init__(self, combineModel: CombinedModel, features: dict = None, ckpt: Optional[str] = None):
         """
@@ -128,14 +138,16 @@ class Multi_AI:
 
     def create_Combined_dataloader(self, pfds: List[str], labels=None, batch_size=256) -> List[Tuple]:
         # Create a combined dataloader for multi-input models using .pfd files.
-        if isinstance(pfds[0], pfdreader):
+        # If we already got reader objects, keep them
+        if hasattr(pfds[0], "extract"):
             pfdfile = pfds
         else:
             with Pool(processes=num_workers) as pool:
-                pfdfile = list(tqdm(pool.imap(pfdreader, pfds),
+                pfdfile = list(tqdm(pool.imap(candidate_reader, pfds),
                 total=len(pfds),
-                desc='Loading PFDs',
+                desc='Loading candidates',
                 mininterval=1.0))
+
 
         def get_dataloaders(feature: str):
             return pfd_To_dataloader(

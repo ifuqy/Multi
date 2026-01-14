@@ -17,12 +17,12 @@ python predict.py --ckpt ./trained_model/weight_0.9954_0.9830.pth --outfile ./te
 """
 
 def main():
-    parser = argparse.ArgumentParser(description="Predict the input pulsar candidates (.pfd)")
+    parser = argparse.ArgumentParser(description="Predict the input pulsar candidates (.pfd) or (.json)")
     parser.add_argument('--ckpt', type=str, required=True, help='Path to model checkpoint (.pth)')
     parser.add_argument('--outfile', type=str, required=True, help='Output file to save predictions')
     
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('--pfd_dir', type=str, help='Directory containing .pfd files (for direct predict)')
+    group.add_argument('--pfd_dir', type=str, help='Directory containing .pfd or .json files (for direct predict)')
     parser.add_argument('--chunk_size', type=int, default=500, help='Max number of pfds loaded each time (Reduce if memory is insufficient.)')
 
     group.add_argument('--pfd_dataloader', type=str, help='Specified dataloader file')
@@ -54,6 +54,10 @@ def main():
 
     else:
         pfds = glob.glob(os.path.join(args.pfd_dir, "*.pfd"))
+        pfds += glob.glob(os.path.join(args.pfd_dir, "*.json"))
+
+        pfds = [p for p in pfds if p and os.path.isfile(p)]
+        pfds.sort()
 
         total = len(pfds)
         chunk_size = args.chunk_size
