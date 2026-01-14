@@ -1,0 +1,21 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter notebooks
+*.ipynb
+
+# Output data
+*.csv
+*.txt
+*.png
+*.log
+
+# Model outputs / figures
+clf_ffa_outputs_new/
+clf_processed_*/
+png_*/
+
+# Temporary / debug
+debug.txt
+sanity.txt
