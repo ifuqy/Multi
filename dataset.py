@@ -1,4 +1,7 @@
 import numpy as np
+import os
+from data_loader import pfdreader
+from jsonreader import jsonreader
 from multiprocessing import Pool, cpu_count
 from tinygrad import Tensor
 from tinygrad.nn.state import safe_load, load_state_dict
@@ -39,18 +42,49 @@ class denoise_UNet:
     def __call__(self, x: Tensor) -> Tensor:
         return self.model(x)
 
+# Helper function for json files 
+
+def load_candidate(x):
+    # If already a reader object (pfdreader/jsonreader), return it
+    if hasattr(x, "extract"):
+        return x
+
+    path = str(x).strip()
+    if not path:
+        raise ValueError(f"Empty candidate path: {repr(x)}")
+
+    if path.endswith(".pfd"):
+        return pfdreader(path)
+    if path.endswith(".json"):
+        return jsonreader(path)
+
+    raise ValueError(f"Unsupported candidate file: {path}")
+
+
 # Process single pfd
+# Process single candidate (.pfd or .json)
 def process_single_pfd(pfd, key, values, feature):
+    cand = pfd  # returns pfdreader(...) or jsonreader(...)
+
+    # IMPORTANT: use extract(), not getdata()
+    # extract() returns either a single array or a list of arrays (for multi-size inputs)
+    extracted = cand.extract(**feature)
+
     if key in ['phasebins', 'DMbins']:
         if not isinstance(values, list):
-            return np.array(pfd.getdata(**feature)).reshape(-1, values)
+            return np.array(extracted).reshape(-1, values)
         else:
-            return [np.array(singledata).reshape(-1, values[i]) for i, singledata in enumerate(pfd.getdata(**{key:values}))]
+            return [np.array(d).reshape(-1, values[i]) for i, d in enumerate(extracted)]
+
     elif key in ['intervals', 'subbands']:
         if not isinstance(values, list):
-            return np.array(pfd.getdata(**feature)).reshape(-1, values, values)
+            return np.array(extracted).reshape(-1, values, values)
         else:
-            return [np.array(singledata).reshape(-1, values[i], values[i]) for i, singledata in enumerate(pfd.getdata(**{key:values}))]
+            return [np.array(d).reshape(-1, values[i], values[i]) for i, d in enumerate(extracted)]
+
+    else:
+        raise ValueError(f"Unknown feature key: {key}")
+
 
 def process_wrapper(args):
     return process_single_pfd(*args)
